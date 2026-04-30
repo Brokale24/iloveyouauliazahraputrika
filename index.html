@@ -14,7 +14,7 @@
         }
         .card {
             background: white; padding: 30px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 350px; width: 90%; z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 380px; width: 90%; z-index: 10;
         }
         h1 { color: #ad1457; font-size: 1.3rem; margin-bottom: 20px; }
         .btn-container {
@@ -28,21 +28,27 @@
         #btnYes { background-color: #ff4081; color: white; position: relative; z-index: 5; }
         #btnNo { background-color: #9e9e9e; color: white; position: relative; z-index: 10; }
         
-        /* Overlay Awal buat aktifin musik */
+        /* Overlay Awal (Amplop) */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #ff4081; color: white; display: flex; flex-direction: column;
             align-items: center; justify-content: center; z-index: 9999; cursor: pointer;
         }
+
+        /* Styling buat Teks Surat */
+        .surat-teks {
+            color: #444; font-size: 1rem; line-height: 1.6; 
+            margin-bottom: 20px; text-align: left;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Tombol Masuk buat Trigger Musik -->
-    <div id="overlay" onclick="mulai()">
-        <!-- Gambar Animasi Amplop/Halo -->
-        <img src="https://media.tenor.com/yvEA1sF9F4UAAAAi/tkthao219-bubududu.gif" width="150" style="border-radius: 15px;">
-        <h2 style="margin-top:20px;">Klik untuk Buka Pesan ❤️</h2>
+    <!-- 1. HALAMAN DEPAN (AMPLOP) -->
+    <div id="overlay" onclick="bukaSurat()">
+        <div style="font-size: 6rem; margin-bottom: 10px; animation: bounce 2s infinite;">💌</div>
+        <h2 style="font-size: 1.5rem;">Ada surat buat kamu...</h2>
+        <p style="margin-top: 10px; font-size: 0.9rem;">(Klik layarnya ya)</p>
     </div>
 
     <!-- PANGGIL FILE MP3 LOKAL -->
@@ -50,9 +56,20 @@
         <source src="lagu.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="card">
-        <!-- Gambar Animasi Minta Pacaran -->
-        <img src="https://media.tenor.com/Z4TGuQIO-hIAAAAi/peach-cat.gif" width="130" style="margin-bottom: 20px;">
+    <!-- 2. HALAMAN SURAT CONFESS -->
+    <div class="card" id="letterCard" style="display: none;">
+        <h1 style="text-align: center; margin-bottom: 15px;">Hai, Aulia... ✨</h1>
+        <div class="surat-teks">
+            Sebenernya udah lama aku pengen ngomong ini, tapi aku ngerasa lebih spesial kalau aku buatin sesuatu buat kamu.<br><br>
+            Lewat website sederhana ini, aku cuma mau bilang kalau aku seneng banget bisa kenal sama kamu. Kamu selalu bisa bikin hari-hariku jadi lebih berwarna.<br><br>
+            Sekarang, ada satu pertanyaan penting yang pengen aku tanyain. Lanjut baca ya? 🥺
+        </div>
+        <button onclick="bukaPertanyaan()" style="background-color: #ff4081; color: white; width: 100%;">Lanjut 👉</button>
+    </div>
+
+    <!-- 3. HALAMAN PERTANYAAN (MAU JADI PACAR GAK) -->
+    <div class="card" id="mainCard" style="display: none;">
+        <img src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/ask.gif" width="130" style="margin-bottom: 20px;">
         <h1 id="question">Aulia Zahra Putrika,<br>Mau jadi pacar aku gak? 🌹</h1>
         
         <div class="btn-container">
@@ -65,12 +82,23 @@
         let yesSize = 1;
         const music = document.getElementById('bgMusic');
         const overlay = document.getElementById('overlay');
+        const letterCard = document.getElementById('letterCard');
+        const mainCard = document.getElementById('mainCard');
 
-        function mulai() {
+        // Fungsi Buka Amplop -> Muncul Surat + Musik Nyala
+        function bukaSurat() {
             music.play().catch(e => console.log("Musik error: ", e));
-            overlay.style.display = 'none'; // Ilangin layar pink
+            overlay.style.display = 'none';
+            letterCard.style.display = 'block';
         }
 
+        // Fungsi Lanjut dari Surat -> Muncul Pertanyaan
+        function bukaPertanyaan() {
+            letterCard.style.display = 'none';
+            mainCard.style.display = 'block';
+        }
+
+        // Fungsi Tombol Lari-lari
         function moveButton() {
             const btnNo = document.getElementById('btnNo');
             const btnYes = document.getElementById('btnYes');
@@ -86,13 +114,13 @@
             btnYes.style.transform = `scale(${yesSize})`;
         }
 
+        // Fungsi Kalo Diterima
         function accepted() {
-            // Gambar pas diterima (Pelukan)
             document.body.innerHTML = `
                 <div style="padding:20px; text-align:center;">
-                    <img src="https://media.tenor.com/9Y1_0Gk2s74AAAAi/tkthao219-bubududu.gif" width="200">
-                    <h1 style="color:#ff4081;">YAY! I Love You, Aulia! ❤️</h1>
-                    <p>Lagi buka WhatsApp...</p>
+                    <img src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/makasih.gif" width="180">
+                    <h1 style="color:#ff4081; margin-top: 20px;">YAY! I Love You, Aulia! ❤️</h1>
+                    <p style="color: #666;">Tunggu bentar, lagi buka WhatsApp...</p>
                 </div>`;
             
             setTimeout(() => {
