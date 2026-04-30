@@ -23,7 +23,7 @@
         }
         button {
             padding: 12px 25px; border-radius: 50px; border: none;
-            font-weight: bold; cursor: pointer; transition: transform 0.2s;
+            font-weight: bold; cursor: pointer; transition: transform 0.2s; font-family: 'Poppins', sans-serif;
         }
         #btnYes { background-color: #ff4081; color: white; position: relative; z-index: 5; }
         #btnNo { background-color: #9e9e9e; color: white; position: relative; z-index: 10; }
@@ -44,9 +44,9 @@
         <h2 style="margin-top:20px;">Klik untuk Buka Pesan ❤️</h2>
     </div>
 
-    <!-- Musik Maroon 5 - She Will Be Loved -->
+    <!-- PANGGIL FILE MP3 LOKAL -->
     <audio id="bgMusic" loop>
-        <source src="https://raw.githubusercontent.com/Hadi-Kusuma/music-host/main/Maroon%205%20-%20She%20Will%20Be%20Loved.mp3" type="audio/mpeg">
+        <source src="lagu.mp3" type="audio/mpeg">
     </audio>
 
     <div class="card">
@@ -65,8 +65,8 @@
         const overlay = document.getElementById('overlay');
 
         function mulai() {
-            music.play().catch(e => console.log("Musik diblokir: ", e));
-            overlay.style.display = 'none';
+            music.play().catch(e => console.log("Musik error: ", e));
+            overlay.style.display = 'none'; // Ilangin layar pink
         }
 
         function moveButton() {
@@ -92,7 +92,6 @@
                     <p>Lagi buka WhatsApp...</p>
                 </div>`;
             
-            // FIX LINK WHATSAPP
             setTimeout(() => {
                 const noWA = "6285183385354";
                 const pesan = encodeURIComponent("I SAY YES! Aulia Zahra Putrika is Yours ❤️");
