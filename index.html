@@ -27,13 +27,26 @@
         }
         #btnYes { background-color: #ff4081; color: white; position: relative; z-index: 5; }
         #btnNo { background-color: #9e9e9e; color: white; position: relative; z-index: 10; }
+        
+        /* Overlay Awal buat aktifin musik */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ff4081; color: white; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Tombol Masuk buat Trigger Musik -->
+    <div id="overlay" onclick="mulai()">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3RreXF6ZzRyc3R6eGZ6ZzRyc3R6eGZ6ZzRyc3R6eGZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/vVzH2FxMo7NTvaSaro/giphy.gif" width="100">
+        <h2 style="margin-top:20px;">Klik untuk Buka Pesan ❤️</h2>
+    </div>
+
     <!-- Musik Maroon 5 - She Will Be Loved -->
     <audio id="bgMusic" loop>
-        <source src="https://files.catbox.moe/972w0a.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/Hadi-Kusuma/music-host/main/Maroon%205%20-%20She%20Will%20Be%20Loved.mp3" type="audio/mpeg">
     </audio>
 
     <div class="card">
@@ -44,21 +57,17 @@
             <button id="btnYes" onclick="accepted()">MAU!</button>
             <button id="btnNo" onmouseover="moveButton()" onclick="moveButton()">Gak.</button>
         </div>
-        <p style="font-size: 0.7rem; color: #ad1457; margin-top: 15px;">(Coba gerakin mouse/sentuh layar biar musiknya nyala ✨)</p>
     </div>
 
     <script>
         let yesSize = 1;
         const music = document.getElementById('bgMusic');
+        const overlay = document.getElementById('overlay');
 
-        // Musik nyala pas ada interaksi
-        const startMusic = () => {
-            music.play();
-            document.removeEventListener('mousemove', startMusic);
-            document.removeEventListener('touchstart', startMusic);
-        };
-        document.addEventListener('mousemove', startMusic);
-        document.addEventListener('touchstart', startMusic);
+        function mulai() {
+            music.play().catch(e => console.log("Musik diblokir: ", e));
+            overlay.style.display = 'none';
+        }
 
         function moveButton() {
             const btnNo = document.getElementById('btnNo');
@@ -77,13 +86,17 @@
 
         function accepted() {
             document.body.innerHTML = `
-                <div style="padding:20px;">
-                    <img src="https://media.giphy.com/media/vVzH2FxMo7NTvaSaro/giphy.gif" width="200">
+                <div style="padding:20px; text-align:center;">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3RreXF6ZzRyc3R6eGZ6ZzRyc3R6eGZ6ZzRyc3R6eGZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/vVzH2FxMo7NTvaSaro/giphy.gif" width="200">
                     <h1 style="color:#ff4081;">YAY! I Love You, Aulia! ❤️</h1>
                     <p>Lagi buka WhatsApp...</p>
                 </div>`;
+            
+            // FIX LINK WHATSAPP
             setTimeout(() => {
-                window.location.href = "https://wa.me/6285183385354?text=I%20SAY%20YES!%20Aulia%20Zahra%20Putrika%20is%20Yours%20❤️";
+                const noWA = "6285183385354";
+                const pesan = encodeURIComponent("I SAY YES! Aulia Zahra Putrika is Yours ❤️");
+                window.location.href = `https://api.whatsapp.com/send?phone=${noWA}&text=${pesan}`;
             }, 2500);
         }
     </script>
