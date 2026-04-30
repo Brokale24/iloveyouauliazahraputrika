@@ -40,6 +40,16 @@
             color: #444; font-size: 1rem; line-height: 1.6; 
             margin-bottom: 20px; text-align: left;
         }
+
+        /* Styling buat Gambar JPEG biar rapi dan gak kebesaran */
+        .img-custom {
+            width: 100%;
+            max-width: 180px; 
+            border-radius: 15px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -51,7 +61,7 @@
         <p style="margin-top: 10px; font-size: 0.9rem;">(Klik layarnya ya)</p>
     </div>
 
-    <!-- PANGGIL FILE MP3 LOKAL -->
+    <!-- PANGGIL FILE MP3 LOKAL (lagu.mp3) -->
     <audio id="bgMusic" loop>
         <source src="lagu.mp3" type="audio/mpeg">
     </audio>
@@ -60,17 +70,24 @@
     <div class="card" id="letterCard" style="display: none;">
         <h1 style="text-align: center; margin-bottom: 15px;">Hai, Aulia... ✨</h1>
         <div class="surat-teks">
-            Sebenernya udah lama aku pengen ngomong ini, tapi aku ngerasa lebih spesial kalau aku buatin sesuatu buat kamu.<br><br>
-            Lewat website sederhana ini, aku cuma mau bilang kalau aku seneng banget bisa kenal sama kamu. Kamu selalu bisa bikin hari-hariku jadi lebih berwarna.<br><br>
-            Sekarang, ada satu pertanyaan penting yang pengen aku tanyain. Lanjut baca ya? 🥺
+        
+            Jujur aku bingung mau nulis apaan yak, tapi lewat surat ini aku cuma mau minta maaf soal kejadian kemarin. Maaf ya, aku malah nambahin pikiran pas kamu lagi hectic-hecticnya, bukannya ngasih <i>support</i>.<br><br>
+            Aku nyesel udah bikin mood kamu berantakan. Kejadian kemarin bikin aku sadar kalau kamu itu penting banget buat aku.<br><br>
+            Bingung nih nulis apalagi, chatGPT ku ga pro, jd ga bisa minta tolong dia buat bikin kata kata wkwkwk.
+            Sebagai tanda damai (dan biar kita baikan), ada satu hal yang mau aku tanyain. Lanjut baca ya? 🥺
+    
+    
         </div>
         <button onclick="bukaPertanyaan()" style="background-color: #ff4081; color: white; width: 100%;">Lanjut 👉</button>
     </div>
 
     <!-- 3. HALAMAN PERTANYAAN (MAU JADI PACAR GAK) -->
     <div class="card" id="mainCard" style="display: none;">
-        <img src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/ask.gif" width="130" style="margin-bottom: 20px;">
-        <h1 id="question">Aulia Zahra Putrika,<br>Mau jadi pacar aku gak? 🌹</h1>
+        
+        <!-- GAMBAR PERTAMA (tanya.jpg) -->
+        <img src="tanya.jpg" class="img-custom" alt="Momen Kita">
+        
+        <h1 id="question">Aulia Zahra Putrika,<br>Balikan yuk? 🌹</h1>
         
         <div class="btn-container">
             <button id="btnYes" onclick="accepted()">MAU!</button>
@@ -85,20 +102,20 @@
         const letterCard = document.getElementById('letterCard');
         const mainCard = document.getElementById('mainCard');
 
-        // Fungsi Buka Amplop -> Muncul Surat + Musik Nyala
+        // Buka Amplop -> Musik Nyala
         function bukaSurat() {
-            music.play().catch(e => console.log("Musik error: ", e));
+            music.play().catch(e => console.log("Musik diblokir browser: ", e));
             overlay.style.display = 'none';
             letterCard.style.display = 'block';
         }
 
-        // Fungsi Lanjut dari Surat -> Muncul Pertanyaan
+        // Buka Pertanyaan
         function bukaPertanyaan() {
             letterCard.style.display = 'none';
             mainCard.style.display = 'block';
         }
 
-        // Fungsi Tombol Lari-lari
+        // Tombol Gak lari-lari
         function moveButton() {
             const btnNo = document.getElementById('btnNo');
             const btnYes = document.getElementById('btnYes');
@@ -114,15 +131,17 @@
             btnYes.style.transform = `scale(${yesSize})`;
         }
 
-        // Fungsi Kalo Diterima
+        // Pas diterima
         function accepted() {
+            // GAMBAR KEDUA (sukses.jpg)
             document.body.innerHTML = `
                 <div style="padding:20px; text-align:center;">
-                    <img src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/makasih.gif" width="180">
+                    <img src="sukses.jpg" class="img-custom" style="max-width: 220px;" alt="Diterima">
                     <h1 style="color:#ff4081; margin-top: 20px;">YAY! I Love You, Aulia! ❤️</h1>
                     <p style="color: #666;">Tunggu bentar, lagi buka WhatsApp...</p>
                 </div>`;
             
+            // Redirect WA
             setTimeout(() => {
                 const noWA = "6285183385354";
                 const pesan = encodeURIComponent("I SAY YES! Aulia Zahra Putrika is Yours ❤️");
