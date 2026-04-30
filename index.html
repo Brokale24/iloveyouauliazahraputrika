@@ -17,35 +17,67 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 350px; width: 90%; z-index: 10;
         }
         h1 { color: #ad1457; font-size: 1.3rem; margin-bottom: 20px; }
-        .btn-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; position: relative; height: 60px; }
-        button { padding: 12px 25px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; }
-        #btnYes { background-color: #ff4081; color: white; z-index: 100; }
-        #btnNo { background-color: #9e9e9e; color: white; position: absolute; }
+        
+        /* Wadah tombol biar rapi di awal */
+        .btn-container {
+            display: flex; justify-content: center; align-items: center;
+            gap: 20px; margin-top: 20px; min-height: 50px; position: relative;
+        }
+        
+        button {
+            padding: 12px 25px; border-radius: 50px; border: none;
+            font-weight: bold; cursor: pointer; font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s;
+        }
+        
+        #btnYes { background-color: #ff4081; color: white; position: relative; z-index: 5; }
+        
+        /* Tombol No dikasih warna abu biar beda */
+        #btnNo { background-color: #9e9e9e; color: white; position: relative; z-index: 10; }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" width="120" style="margin-bottom: 20px;">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZ6ZzRyc3R6eGZ6ZzRyc3R6eGZ6ZzRyc3R6eGZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/cLS1cfxvGOPVpf9g3y/giphy.gif" width="120" style="margin-bottom: 20px;">
         <h1 id="question">Aulia Zahra Putrika,<br>Mau jadi pacar aku gak? 🌹</h1>
+        
         <div class="btn-container">
             <button id="btnYes" onclick="accepted()">MAU!</button>
-            <button id="btnNo" onmouseover="moveAndGrow()" onclick="moveAndGrow()">Gak.</button>
+            <button id="btnNo" onmouseover="moveButton()" onclick="moveButton()">Gak.</button>
         </div>
     </div>
+
     <script>
         let yesSize = 1;
-        function moveAndGrow() {
+
+        function moveButton() {
             const btnNo = document.getElementById('btnNo');
             const btnYes = document.getElementById('btnYes');
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            btnNo.style.position = 'fixed'; btnNo.style.left = x + 'px'; btnNo.style.top = y + 'px';
-            yesSize += 0.5; btnYes.style.transform = `scale(${yesSize})`;
+            
+            // Ubah posisi jadi fixed biar bisa lari ke mana aja setelah di-hover
+            btnNo.style.position = 'fixed';
+            
+            // Kalkulasi posisi random
+            const x = Math.random() * (window.innerWidth - btnNo.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnNo.offsetHeight);
+            
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+
+            // Efek tombol YES membesar
+            yesSize += 0.4;
+            btnYes.style.transform = `scale(${yesSize})`;
         }
+
         function accepted() {
-            document.body.innerHTML = `<h1>I Love You, Aulia! ❤️</h1>`;
+            document.body.innerHTML = `
+                <div style="padding:20px;">
+                    <img src="https://media.giphy.com/media/vVzH2FxMo7NTvaSaro/giphy.gif" width="200">
+                    <h1 style="color:#ff4081;">YAY! I Love You, Aulia! ❤️</h1>
+                </div>`;
             setTimeout(() => {
-                window.location.href = "https://wa.me/628123456789?text=I%20SAY%20YES!%20❤️"; // Ganti nomor lo
+                // JANGAN LUPA GANTI NOMOR WA LO DI SINI
+                window.location.href = "https://wa.me/628XXXXXXXXXX?text=I%20SAY%20YES!%20❤️";
             }, 2000);
         }
     </script>
